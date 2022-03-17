@@ -1,0 +1,19 @@
+.container_items{
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-between;
+padding: 20px;
+}
+.container_items h1{
+    font-size: 64px;
+    font-family: Montserrat;
+    color: #ffffff;
+    font-weight: 800;
+}
+.container_items span{
+    margin-top: 20px;
+    font-family: Montserrat;
+    color: #ffffff;
+    font-size: 16px;   
+}

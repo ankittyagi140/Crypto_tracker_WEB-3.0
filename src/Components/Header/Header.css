@@ -1,0 +1,8 @@
+.drop-down{
+    width: 100px;
+    height: 40px;
+    background: gold;
+    border: 2px solid gold;
+    border-radius: 4px;
+    padding-left: 10px;
+}

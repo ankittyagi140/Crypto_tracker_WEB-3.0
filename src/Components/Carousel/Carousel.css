@@ -1,0 +1,13 @@
+ .coin_card{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items:center;
+}
+/* .coin_card img{
+    height: 200px;
+    width: 150px;
+} */
+/*.alice_carousel{
+    padding:25px;
+}*/
