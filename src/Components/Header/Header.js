@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import { CryptoState } from "../../CryptoContext/CryptoContext";
+import { useContext} from "react";
+
 const Header = () => {
   const navigate = useNavigate();
-  const { currency, setCurrency } = CryptoState();
+  const { currency, setCurrency } = useContext(CryptoState);
   return (
     <NavBar>
       <Logo

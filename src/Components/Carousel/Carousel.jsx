@@ -1,97 +1,104 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { CryptoState } from "../../CryptoContext/CryptoContext";
-import AliceCarousel from "react-alice-carousel";
 import { Link } from "react-router-dom";
 import "./Carousel.css";
 import { TrendingCoins } from "../../Config/api";
-import "react-alice-carousel/lib/alice-carousel.css";
+import Slider from "react-slick";
 
-export function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(d{3})+(?!\d))/g, ",");
-}
+// export const numberWithCommas = (x) => {
+//   return x.toString().replace(/\B(?=(d{3})+(?!\d))/g, ",");
+// };
 
 const Carousel = () => {
   const [trending, setTrending] = useState([]);
-  const { symbol, currency } = CryptoState();
+  const { currency, symbol } = useContext(CryptoState);
 
   const fetchTrendingCoins = async (currency) => {
-    const { data } = await axios.get(TrendingCoins(currency));
+    const { data } = await new Promise((res, rej) => {
+      setTimeout(() => {
+        try {
+          res(axios.get(TrendingCoins(currency)));
+        } catch (err) {
+          rej(console.log(err));
+        }
+      }, 10);
+    });
     setTrending(data);
   };
-  console.log(trending);
 
   useEffect(() => {
     fetchTrendingCoins(currency);
   }, [currency]);
 
-  const myStyle = {
-    marginTop: "0px",
-    fontSize: "24px",
-    fontWeight: 600,
+  const mystyle = {
+    marginTop: "10px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   };
 
-  const items = trending.map((coin) => {
-    let price24 = coin?.price_change_percentage_24h.toFixed(2);
-
-    return (
-      <Link  key={coin?.id} className="coin_card" to={`/coins/${coin?.id}`}>
-        <img height="80" src={coin?.image} alt={coin?.name} />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <span style={{ textTransform: "uppercase" }}>
-            {coin?.symbol}
-            &nbsp;
-            {price24 >= 0 ? (
-              <span style={{ color: "green" }}>{`+${price24} %`}</span>
-            ) : (
-              <span style={{ color: "red" }}>{`-${price24} %`}</span>
-            )}
-          </span>
-          <span style={myStyle}>{`${symbol} ${numberWithCommas(
-            coin?.current_price.toFixed(2)
-          )}`}</span>
-        </div>
-      </Link>
-    );
-  });
-  const responsive = {
-    0: {
-      items: 2,
-    },
-    512: {
-      items: 4,
-    },
+  const settings = {
+    infinite: true,
+    slidesToShow: 4,
+    initialSlide: 0,
+    autoplay: true,
+    speed: 3000,
+    autoplaySpeed: 3000,
+    cssEase: "linear",
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          initialSlide: 3,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+    ],
   };
   return (
-    <ContainerCorousel>
-      <AliceCarousel
-        mouseTracking
-        infinite
-        autoPlayInterval={1000}
-        animationDuration={1500}
-        disableDotsControls
-        responsive={responsive}
-        disableButtonsControls
-        autoPlay
-        items={items}
-      />
-    </ContainerCorousel>
+    <Slider className="slick_carousel" {...settings}>
+      {trending.map((coin) => {
+        let price24 = coin?.price_change_percentage_24h.toFixed(2);
+        return (
+          <Link className="coin_card" key={coin?.id} to={`/coins/${coin?.id}`}>
+            <img height="80" src={coin?.image} alt={coin?.name} />
+            <div style={mystyle}>
+              <span style={{ textTransform: "uppercase" }}>
+                {coin?.symbol}
+                &nbsp;
+                {price24 >= 0 ? (
+                  <span style={{ color: "green" }}>{`+${price24} %`}</span>
+                ) : (
+                  <span style={{ color: "red" }}>{`-${price24} %`}</span>
+                )}
+              </span>
+              <span
+                style={{ fontSize: "18px", fontWeight: "400" }}
+              >{`${symbol} ${coin?.current_price.toFixed(3)}`}</span>
+            </div>
+          </Link>
+        );
+      })}
+    </Slider>
   );
 };
 
 export default Carousel;
-
-const ContainerCorousel = styled.div`
-  height: 50%;
-  display: flex;
-  align-items: center;
-  margin-top: 40px;
-`;
