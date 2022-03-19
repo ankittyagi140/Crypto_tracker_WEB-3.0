@@ -7,11 +7,7 @@ function Banner() {
   return (
     <ContainerBanner>
       <div className="container_items">
-        <h1>Crypto Tracker</h1>
-        <span>
-          Get All the Information Regrding Your Favaourite Crypto currency
-        </span>
-        <Carousel/>
+        <Carousel />
       </div>
     </ContainerBanner>
   );
@@ -20,9 +16,9 @@ function Banner() {
 export default Banner;
 
 const ContainerBanner = styled.div`
-  height: 100vh;
-  background: url("./images/banner.jpg");
+  /*height: 50vh;*/
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  background: #fff;
 `;

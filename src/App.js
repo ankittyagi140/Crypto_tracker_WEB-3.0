@@ -6,6 +6,8 @@ import Header from "./Components/Header/Header";
 import styled from 'styled-components';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Transfer from "./Pages/Transfer/Transfer";
+import ComingSoon from "./Pages/ComingSoon/ComingSoon";
 
 function App() {
   
@@ -16,6 +18,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} exact />
           <Route path="/coins/:id" element={<Detail />} />
+          <Route path="/transfer" element={<Transfer/>}/>
+          <Route path="/send_crypto" element={<ComingSoon/>}/>
         </Routes>
       </MainContainer>
     </BrowserRouter>

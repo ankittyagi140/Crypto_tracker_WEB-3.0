@@ -1,29 +1,58 @@
-/* .coin_card img{
-    height: 200px;
-    width: 150px;
-} */
+.coin_card {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 /*.alice_carousel{
     padding:25px;
 }*/
-.slick_carousel{
-    
-    width:100%;
-    max-width: 1200px;
-    margin: 40px 20px 20px 20px;
-    padding: 10px;
+.slick_carousel {
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px 0px 0px 20px;
+  padding: 10px;
 }
-/* .coin_card{
+
+.slick-slide {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border: 0.12rem dotted rgba(135, 190, 73, 0.5);
+  box-shadow: rgb(0 155 0 / 4%) 0px 0px 12px;
+  border-radius: 5px;
+  transition: all 0.3s ease 0s;
+}
+.slick-arrow {
+  display: none !important;
+}
+.price_tag {
+  font-size: 20px;
+  font-weight: 600;
+}
+@media screen and (max-width: 767px) {
+  .price_tag {
+    font-size: 12px;
+    margin-top: 5px;
+  }
+}
+.name_price_change {
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+@media screen and (max-width: 767px) {
+  .name_price_change {
+    text-transform: uppercase;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-} */
-.slick-slide{
-    display: flex !important;
-    flex-direction:column;
-    align-items:center;
-    justify-content: center;
-}
-.slick-arrow{
-    display:none !important;
+    margin-top: 0;
+    font-size: 12px;
+
+  }
 }
