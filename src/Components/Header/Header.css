@@ -1,8 +1,21 @@
-.drop-down{
-    width: 100px;
-    height: 40px;
-    background: gold;
-    border: 2px solid gold;
-    border-radius: 4px;
-    padding-left: 10px;
+.drop-down {
+  width: 100px;
+  height: 40px;
+  background: gold;
+  border: 2px solid gold;
+  border-radius: 4px;
+  padding-left: 10px;
+}
+.launch_app {
+  background-color: gold;
+  color: black;
+  padding: 10px;
+  font-size: 18px;
+  font-family: MONTSERRAT;
+  border: none;
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  width:"100%"
 }

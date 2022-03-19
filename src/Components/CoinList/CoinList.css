@@ -1,0 +1,13 @@
+.coin_summary_contaner{
+    display:flex !important;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+.MuiTableCell-root{
+    line-height: 1 !important;
+    padding: 10px !important;
+}
+span{
+    color: black;
+}

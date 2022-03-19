@@ -1,13 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Bigelow+Rules&family=Montserrat:ital,wght@0,300;0,800;1,400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bigelow+Rules&family=Montserrat:ital,wght@0,300;0,800;1,400&display=swap");
 @import "react-alice-carousel/lib/alice-carousel.css";
-*{
-  margin:0;
-  padding:0;
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
   scroll-behavior: smooth;
-
 }
-a{
-color: gold;
-text-decoration: none;
+a {
+  color: gold;
+  text-decoration: none;
+}
+span {
+  color: rgb(29, 29, 29);
+}
+.fToVfw{
+  background-color: #fff !important;
 }
