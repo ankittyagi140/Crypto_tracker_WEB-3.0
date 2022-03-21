@@ -18,6 +18,7 @@
 }
 .coin_details span {
   margin: 5px;
+  max-width: 250px;;
 }
 .coin_span {
   font-size: 16px;
