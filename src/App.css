@@ -5,6 +5,7 @@
   padding: 0;
   box-sizing: border-box;
   scroll-behavior: smooth;
+  background-color: #ffffff;
 }
 a {
   color: gold;
@@ -13,6 +14,8 @@ a {
 span {
   color: rgb(29, 29, 29);
 }
-.fToVfw{
+
+.sc-eCImPb{
   background-color: #fff !important;
+
 }

@@ -1,0 +1,9 @@
+.chart_button {
+    margin: 20px;
+    padding: 10px;
+    color: black;
+    background-color: gold;
+    border: gold;
+    border-radius: 4px;
+    cursor: pointer;
+  }

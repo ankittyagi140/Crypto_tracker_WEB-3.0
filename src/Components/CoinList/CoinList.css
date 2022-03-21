@@ -11,3 +11,7 @@
 span{
     color: black;
 }
+.pagination_component{
+    padding:5px;
+    margin: 10px;
+}

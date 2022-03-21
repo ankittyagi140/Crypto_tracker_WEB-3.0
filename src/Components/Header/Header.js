@@ -65,12 +65,12 @@ const Logo = styled.div`
   font-weight: bold;
 `;
 const Navitems = styled.div`
-width:60%;
+  width: 60%;
   display: flex;
-  flex-direction:row;
-  justify-content:space-between;
-  align-items:center;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   @media (max-width: 680px) {
-    margin-top:10px;
+    margin-top: 10px;
   }
 `;
