@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export const FormFields = ({ placeholder, name }) => {
   return (
-    <input className="input_field" placeholder={placeholder} name={name} />
+    <input className="input_field" autoFocus placeholder={placeholder} name={name} />
   );
 };
 const Transfer = () => {

@@ -28,7 +28,6 @@ const Carousel = () => {
     });
     setTrending(data);
   };
-  console.log(trending);
   useEffect(() => {
     setIsLoading(true);
     fetchTrendingCoins(currency);
