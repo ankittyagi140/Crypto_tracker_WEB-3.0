@@ -29,7 +29,6 @@ const CoinChart = () => {
       console.error(err);
     }
   };
-  console.log(coinChart);
 
   useEffect(() => {
     fetchCoinChart();

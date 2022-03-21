@@ -41,7 +41,6 @@ const CoinList = () => {
     });
     setCoinSummary(data);
   };
-  console.log(coinSummary);
   const handelSearch = () => {
     return coinSummary.filter(
       (coin) =>
@@ -189,7 +188,7 @@ const CoinList = () => {
         </TableContainer>
         <Pagination
           className="pagination_component"
-          count={parseInt(handelSearch()?.length / 10).toFixed(0)}
+          count={(handelSearch()?.length / 10)}
           onChange={(_, value) => {
             setPage(value);
             window.scroll(0, 300);

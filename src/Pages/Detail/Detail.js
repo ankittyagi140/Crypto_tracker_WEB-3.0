@@ -7,7 +7,6 @@ import { LinearProgress } from "@mui/material";
 import CoinChart from "../../Components/CoinChart/CoinChart";
 import CoinDetails from "../../Components/CoinDetails/CoinDetails";
 import { CryptoState } from "../../CryptoContext/CryptoContext";
-import HocMillion from "../../Components/Hoc/HocMillion";
 
 const Detail = ({ props }) => {
   const [coinData, setCoinData] = useState();
@@ -31,8 +30,6 @@ const Detail = ({ props }) => {
       return num; // if value < 1000, nothing to do
     }
   };
-  console.log(coinData);
-  console.log(props)
 
   useEffect(() => {
     setIsLoading(true);

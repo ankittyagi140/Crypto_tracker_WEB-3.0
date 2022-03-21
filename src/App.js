@@ -16,7 +16,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} exact />
-          <Route path="/coins/:id" element={<Detail position="relative" />} />
+          <Route path="/coins/:id" element={<Detail/>} />
           <Route path="/transfer" element={<Transfer />} />
           <Route path="/send_crypto" element={<ComingSoon />} />
         </Routes>
@@ -28,7 +28,5 @@ function App() {
 export default App;
 
 const MainContainer = styled.div`
-  background-color: #14161a;
-  color: #ffffff;
-  min-height: 100vh;
+  width:100%;
 `;
