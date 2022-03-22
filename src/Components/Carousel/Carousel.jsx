@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import "./Carousel.css";
 import { TrendingCoins } from "../../Config/api";
 import Slider from "react-slick";
-import { LinearProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 // export const numberWithCommas = (x) => {
 //   return x.toString().replace(/\B(?=(d{3})+(?!\d))/g, ",");
@@ -17,17 +17,18 @@ const Carousel = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchTrendingCoins = async (currency) => {
-    const { data } = await new Promise((res, rej) => {
-      setTimeout(() => {
-        try {
+    try {
+      const { data } = await new Promise((res, rej) => {
+        setTimeout(() => {
           res(axios.get(TrendingCoins(currency)));
-        } catch (err) {
-          rej(console.log(err));
-        }
-      }, 10);
-    });
-    setTrending(data);
+        }, 1000);
+      });
+      setTrending(data);
+    } catch (err) {
+      console.error(err);
+    }
   };
+
   useEffect(() => {
     setIsLoading(true);
     fetchTrendingCoins(currency);
@@ -78,33 +79,40 @@ const Carousel = () => {
   };
   return (
     <Slider className="slick_carousel" {...settings}>
-   {isLoading ? (
-            <LinearProgress
-              style={{ backgroundColor: "gold" }}
-            ></LinearProgress>
-          ) : (
-      trending.map((coin) => {
-        let price24 = coin?.price_change_percentage_24h.toFixed(2);
-        return (
-          <Link className="coin_card" key={coin?.id} to={`/coins/${coin?.id}`}>
-            <img height="80" src={coin?.image} alt={coin?.name} />
-            <div style={mystyle}>
-              <span className="name_price_change">
-                {coin?.symbol}
-                &nbsp;
-                {price24 >= 0 ? (
-                  <span style={{ color: "green" }}>{`+${price24} %`}</span>
-                ) : (
-                  <span style={{ color: "red" }}>{`${price24} %`}</span>
-                )}
-              </span>
-              <span className="price_tag">{`${symbol} ${coin?.current_price.toFixed(
-                2
-              )}`}</span>
-            </div>
-          </Link>
-        );
-      }))}
+      {isLoading ? (
+        <CircularProgress
+          style={{ color: "gold" }}
+          size={250}
+          thickness={1}
+        ></CircularProgress>
+      ) : (
+        trending.map((coin) => {
+          let price24 = coin?.price_change_percentage_24h.toFixed(2);
+          return (
+            <Link
+              className="coin_card"
+              key={coin?.id}
+              to={`/coins/${coin?.id}`}
+            >
+              <img height="80" src={coin?.image} alt={coin?.name} />
+              <div style={mystyle}>
+                <span className="name_price_change">
+                  {coin?.symbol}
+                  &nbsp;
+                  {price24 >= 0 ? (
+                    <span style={{ color: "green" }}>{`+${price24} %`}</span>
+                  ) : (
+                    <span style={{ color: "red" }}>{`${price24} %`}</span>
+                  )}
+                </span>
+                <span className="price_tag">{`${symbol} ${coin?.current_price.toFixed(
+                  2
+                )}`}</span>
+              </div>
+            </Link>
+          );
+        })
+      )}
     </Slider>
   );
 };

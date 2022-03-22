@@ -6,6 +6,11 @@
   border-radius: 4px;
   padding-left: 10px;
 }
+@media (max-width: 680px) {
+  .drop-down {
+    width: 100%;
+  }
+}
 .launch_app {
   background-color: gold;
   color: black;
@@ -17,5 +22,10 @@
   border-radius: 4px;
   font-weight: 600;
   cursor: pointer;
-  width:"100%"
+}
+@media (max-width: 680px) {
+  .launch_app {
+    width: 100%;
+    margin: 10px;
+  }
 }

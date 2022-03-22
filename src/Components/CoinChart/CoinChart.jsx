@@ -37,7 +37,11 @@ const CoinChart = () => {
   return (
     <div className="coin_chart">
       {!coinChart ? (
-        <CircularProgress style={{ color: "gold" }}></CircularProgress>
+        <CircularProgress
+          style={{ color: "gold" }}
+          size={300}
+          thickness={1}
+        ></CircularProgress>
       ) : (
         <>
           <Line

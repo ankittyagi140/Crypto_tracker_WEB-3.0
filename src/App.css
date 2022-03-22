@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Bigelow+Rules&family=Montserrat:ital,wght@0,300;0,800;1,400&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bigelow+Rules&family=Montserrat:wght@300;400;500;600&display=swap');
 @import "react-alice-carousel/lib/alice-carousel.css";
 * {
   margin: 0;
