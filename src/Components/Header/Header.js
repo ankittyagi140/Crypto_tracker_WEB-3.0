@@ -24,7 +24,7 @@ const Header = () => {
       </Logo>
       <Navitems>
         <button className="launch_app" onClick={handelClick}>
-          Launch App
+          Transfer Crypto
         </button>
         <select
           className="drop-down"
@@ -42,17 +42,16 @@ const Header = () => {
 };
 export default Header;
 const NavBar = styled.div`
+  position: relative;
   z-index: 10;
-  position: sticky;
-  top: 0;
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background: #fff;
-  box-shadow: rgb(0 0 0 / 10%) 0px 3px 6px;
+  background: #cde4eb36;
+  box-shadow: #0983e5a3 0px 3px 6px;
   @media (max-width: 680px) {
     flex-direction: column;
   }
@@ -72,5 +71,6 @@ const Navitems = styled.div`
   align-items: center;
   @media (max-width: 680px) {
     margin-top: 10px;
+    flex-direction: column;
   }
 `;

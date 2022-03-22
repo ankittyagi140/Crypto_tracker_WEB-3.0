@@ -4,18 +4,24 @@ import { useNavigate } from "react-router-dom";
 
 export const FormFields = ({ placeholder, name }) => {
   return (
-    <input className="input_field" autoFocus placeholder={placeholder} name={name} />
+    <input
+      className="input_field"
+      autoFocus
+      placeholder={placeholder}
+      name={name}
+    />
   );
 };
 const Transfer = () => {
-const navigate = useNavigate();
-    const connectWallet=()=>{
-navigate("sent_crypto")
-    }
-    const sendCrypto=()=>{
-      navigate("sent_crypto")
 
-    }
+  const connectWallet = () => {
+    alert("Coming soon")
+  };
+
+  const sendCrypto = () => {
+    alert("Coming soon")
+  };
+
   return (
     <Container
       style={{
@@ -36,7 +42,7 @@ navigate("sent_crypto")
       </button>
 
       <form className="tranfer_form">
-        <FormFields placeholder="Address To" name="address"  />
+        <FormFields placeholder="Address To" name="address" />
         <FormFields placeholder="Amount(ETH)" name="amount" />
         <FormFields placeholder="Keyword (GIF)" name="keyword" />
         <FormFields placeholder="Enter Message" name="message" />

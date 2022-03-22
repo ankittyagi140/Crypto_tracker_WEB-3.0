@@ -3,6 +3,7 @@ import { CryptoState } from "../../CryptoContext/CryptoContext";
 import { CoinData } from "../../Config/api";
 import axios from "axios";
 import "./CoinList.css";
+import SelectedButton from "../SelectedButton/SelectedButton";
 import {
   Container,
   LinearProgress,
@@ -19,8 +20,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 
-
 const CoinList = () => {
+  const [sortedList, setSortedList] = useState([]);
+  const [flag, setFlag] = useState(false);
   const { currency, symbol } = useContext(CryptoState);
   const [coinSummary, setCoinSummary] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -41,12 +43,115 @@ const CoinList = () => {
     });
     setCoinSummary(data);
   };
+
   const handelSearch = () => {
     return coinSummary.filter(
       (coin) =>
         coin.name.toLowerCase().includes(search.toLocaleLowerCase()) ||
         coin.symbol.toLowerCase().includes(search.toLocaleLowerCase())
     );
+  };
+  // const commonSort = (val) => {
+  //   if (!flag) {
+  //     setSortedList(coinSummary.map(caller().call(this)));
+  //     function caller(coin){return coin.val};
+  //     setFlag(true);
+  //   } else {
+  //     alert("plese Reset the filter and try again");
+  //   }
+  //   return sortedList;
+  // };
+  // console.log(sortedList)
+  //handelling all sorting functionality
+  const handelSort = (e) => {
+    if (e.target.innerText === `+ (24-h)%`) {
+      // commonSort("price_change_percentage_24h");
+      if (!flag) {
+        setSortedList(
+          coinSummary.sort(
+            (a, b) =>
+              b.price_change_percentage_24h - a.price_change_percentage_24h
+          )
+        );
+        setFlag(true);
+      } else {
+        alert("plese Reset the filter and try again");
+      }
+    }
+    if (e.target.innerText === `+ Price Change`) {
+      if (!flag) {
+        setSortedList(
+          coinSummary.sort((a, b) => b.price_change_24h - a.price_change_24h)
+        );
+        setFlag(true);
+      } else {
+        alert("plese Reset the filter and try again");
+      }
+    }
+    if (e.target.innerText === `+ Volume(24-h)`) {
+      if (!flag) {
+        setSortedList(
+          coinSummary.sort((a, b) => b.total_volume - a.total_volume)
+        );
+        setFlag(true);
+      } else {
+        alert("plese Reset the filter and try again");
+      }
+    }
+    if (e.target.innerText === `- Market Cap`) {
+      if (!flag) {
+        setSortedList(coinSummary.sort((a, b) => a.market_cap - b.market_cap));
+        setFlag(true);
+      } else {
+        alert("plese Reset the filter and try again");
+      }
+    }
+    if (e.target.innerText === `- Price Change`) {
+      if (!flag) {
+        setSortedList(
+          coinSummary.sort((a, b) => a.price_change_24h - b.price_change_24h)
+        );
+        setFlag(true);
+      } else {
+        alert("plese Reset the filter and try again");
+      }
+    }
+    if (e.target.innerText === `- Volume(24-h)`) {
+      if (!flag) {
+        setSortedList(
+          coinSummary.sort((a, b) => a.total_volume - b.total_volume)
+        );
+        setFlag(true);
+      } else {
+        alert("plese Reset the filter and try again");
+      }
+    }
+    if (e.target.innerText === `- (24-h)%`) {
+      if (!flag) {
+        setSortedList(
+          coinSummary.sort(
+            (a, b) =>
+              a.price_change_percentage_24h - b.price_change_percentage_24h
+          )
+        );
+        setFlag(true);
+      } else {
+        alert("plese Reset the filter and try again");
+      }
+    }
+    // if(e.target.innerText==="Reset"){
+    //   setSortedList(coinSummary)
+    // }
+  };
+  const handelReset = () => {
+    if (flag) {
+      setSortedList(
+        coinSummary.sort((a, b) => a.market_cap_rank - b.market_cap_rank)
+      );
+      setFlag(false);
+    } else {
+      alert("please select a filter first");
+    }
   };
 
   useEffect(() => {
@@ -75,9 +180,10 @@ const CoinList = () => {
             fontSize: "32px",
             fontWeight: "600",
             color: "#006f8f",
+            textAlign: "center",
           }}
         >
-          Get details of your coins with market cap
+          Now you can track your favourite Coins with market cap
         </p>
         <TextField
           style={{ margin: "20px", width: "100%" }}
@@ -87,11 +193,25 @@ const CoinList = () => {
             setSearch(e.target.value);
           }}
         />
+        <Container className="filter_container">
+          <SelectedButton onClick={handelSort}>{`+ (24-h)%`}</SelectedButton>
+          <SelectedButton
+            onClick={handelSort}
+          >{`+ Price Change`}</SelectedButton>
+          <SelectedButton
+            onClick={handelSort}
+          >{`+ Volume(24-h)`}</SelectedButton>
+          <SelectedButton onClick={handelSort}>{`- (24-h)%`}</SelectedButton>
+          <SelectedButton onClick={handelSort}>{`- Price Change`}</SelectedButton>
+          <SelectedButton onClick={handelSort}>{`- Volume(24-h)`}</SelectedButton>
+          <SelectedButton onClick={handelSort}>{`- Market Cap`}</SelectedButton>
+          <button className="reset_button" onClick={handelReset}>
+            Reset
+          </button>
+        </Container>
         <TableContainer>
           {loading ? (
-            <LinearProgress
-              style={{ backgroundColor: "gold" }}
-            ></LinearProgress>
+            <LinearProgress style={{ Color: "gold" }}></LinearProgress>
           ) : (
             <Table>
               <TableHead style={{ backgroundColor: "#EEBC1D" }}>
@@ -100,18 +220,20 @@ const CoinList = () => {
                     "Rank",
                     "Coin",
                     "Price",
-                    "24Hrs-Change-%",
+                    "(24-h)%",
+                    "Price Change",
+                    "Volume(24-h)",
+                    "Circulating Supply",
                     `Market Cap ${symbol}`,
                   ].map((element) => {
                     return (
                       <TableCell
                         style={{
                           color: "black",
-                          fontWeight: "700",
+                          fontWeight: "500",
                           fontFamily: "Montserrat",
                         }}
                         key={element}
-                        //align={element === "coin" ? "" : "right"}
                       >
                         {element}
                       </TableCell>
@@ -120,12 +242,14 @@ const CoinList = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {handelSearch()
+                {(handelSearch() || sortedList)
                   .map((row) => {
-                    const profit = row?.price_change_percentage_24h;
+                    const profit = row?.price_change_percentage_24h.toFixed(2);
+                    const priceChange = row?.price_change_24h.toFixed(2);
                     return (
                       <TableRow
                         key={row.id}
+                        style={{ cursor: "pointer" }}
                         onClick={() => {
                           navigate(`coins/${row?.id}`);
                         }}
@@ -145,7 +269,7 @@ const CoinList = () => {
                           <img
                             src={row?.image}
                             alt={row?.name}
-                            style={{ height: "30px" }}
+                            style={{ height: "45px" }}
                           />
                           <CoinName>
                             <span
@@ -160,9 +284,9 @@ const CoinList = () => {
                         </TableCell>
                         <TableCell>
                           <CoinPrice>
-                            <span style={{ fontSize: "14px" }}>
+                            <span>
+                              {row?.current_price}
                               {symbol}
-                              <span> {row?.current_price}</span>
                             </span>
                           </CoinPrice>
                         </TableCell>
@@ -170,10 +294,33 @@ const CoinList = () => {
                           {profit > 0 ? (
                             <span
                               style={{ color: "green" }}
-                            >{`+ ${profit}`}</span>
+                            >{`+${profit}%`}</span>
                           ) : (
-                            <span style={{ color: "red" }}>{profit}</span>
+                            <span style={{ color: "red" }}>{`${profit}%`}</span>
                           )}
+                        </TableCell>
+                        <TableCell>
+                          {priceChange > 0 ? (
+                            <span style={{ color: "green" }}>
+                              {`+${priceChange}${symbol}`}
+                            </span>
+                          ) : (
+                            <span style={{ color: "red" }}>
+                              {priceChange}
+                              {symbol}
+                            </span>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <span>
+                            {numFormatter(row?.total_volume)} {symbol}
+                          </span>
+                        </TableCell>
+                        <TableCell>
+                          <span>
+                            {numFormatter(row?.circulating_supply)}{" "}
+                            {row?.symbol.toUpperCase()}
+                          </span>
                         </TableCell>
                         <TableCell>
                           <span>{numFormatter(row?.market_cap)}</span>
@@ -181,17 +328,17 @@ const CoinList = () => {
                       </TableRow>
                     );
                   })
-                  .slice((page - 1) * 10, (page - 1) * 10 + 10)}
+                  .slice((page - 1) * 20, (page - 1) * 20 + 20)}
               </TableBody>
             </Table>
           )}
         </TableContainer>
         <Pagination
           className="pagination_component"
-          count={(handelSearch()?.length / 10)}
+          count={parseInt(handelSearch()?.length / 20)}
           onChange={(_, value) => {
             setPage(value);
-            window.scroll(0, 300);
+            window.scroll(0, 500);
           }}
         />
       </Container>
