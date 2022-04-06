@@ -30,6 +30,7 @@ const CoinList = () => {
   const navigate = useNavigate();
   let [page, setPage] = useState(1);
   let [coinCount, setCoinCount] = useState(0);
+  const [searchResult, setSearchResult] = useState([]);
 
   const fetchCoinData = async (currency) => {
     const { data } = await new Promise((res, rej) => {
@@ -42,14 +43,18 @@ const CoinList = () => {
       }, 10);
     });
     setCoinSummary(data);
+    setSearchResult(data);
   };
 
   const handelSearch = () => {
-    return coinSummary.filter(
-      (coin) =>
-        coin.name.toLowerCase().includes(search.toLocaleLowerCase()) ||
-        coin.symbol.toLowerCase().includes(search.toLocaleLowerCase())
-    );
+    const result = coinSummary.filter((coin) => {
+      return (
+        coin.name.toLowerCase().includes(search.toLowerCase()) ||
+        coin.symbol.toLowerCase().includes(search.toLowerCase())
+      );
+    });
+    setSearchResult(result);
+    setFlag(true);
   };
   // const commonSort = (val) => {
   //   if (!flag) {
@@ -68,7 +73,7 @@ const CoinList = () => {
       // commonSort("price_change_percentage_24h");
       if (!flag) {
         setSortedList(
-          coinSummary.sort(
+          searchResult.sort(
             (a, b) =>
               b.price_change_percentage_24h - a.price_change_percentage_24h
           )
@@ -81,7 +86,7 @@ const CoinList = () => {
     if (e.target.innerText === `+ Price Change`) {
       if (!flag) {
         setSortedList(
-          coinSummary.sort((a, b) => b.price_change_24h - a.price_change_24h)
+          searchResult.sort((a, b) => b.price_change_24h - a.price_change_24h)
         );
         setFlag(true);
       } else {
@@ -91,7 +96,7 @@ const CoinList = () => {
     if (e.target.innerText === `+ Volume(24-h)`) {
       if (!flag) {
         setSortedList(
-          coinSummary.sort((a, b) => b.total_volume - a.total_volume)
+          searchResult.sort((a, b) => b.total_volume - a.total_volume)
         );
         setFlag(true);
       } else {
@@ -100,7 +105,7 @@ const CoinList = () => {
     }
     if (e.target.innerText === `- Market Cap`) {
       if (!flag) {
-        setSortedList(coinSummary.sort((a, b) => a.market_cap - b.market_cap));
+        setSortedList(searchResult.sort((a, b) => a.market_cap - b.market_cap));
         setFlag(true);
       } else {
         alert("plese Reset the filter and try again");
@@ -109,7 +114,7 @@ const CoinList = () => {
     if (e.target.innerText === `- Price Change`) {
       if (!flag) {
         setSortedList(
-          coinSummary.sort((a, b) => a.price_change_24h - b.price_change_24h)
+          searchResult.sort((a, b) => a.price_change_24h - b.price_change_24h)
         );
         setFlag(true);
       } else {
@@ -119,7 +124,7 @@ const CoinList = () => {
     if (e.target.innerText === `- Volume(24-h)`) {
       if (!flag) {
         setSortedList(
-          coinSummary.sort((a, b) => a.total_volume - b.total_volume)
+          searchResult.sort((a, b) => a.total_volume - b.total_volume)
         );
         setFlag(true);
       } else {
@@ -129,7 +134,7 @@ const CoinList = () => {
     if (e.target.innerText === `- (24-h)%`) {
       if (!flag) {
         setSortedList(
-          coinSummary.sort(
+          searchResult.sort(
             (a, b) =>
               a.price_change_percentage_24h - b.price_change_percentage_24h
           )
@@ -148,6 +153,7 @@ const CoinList = () => {
       setSortedList(
         coinSummary.sort((a, b) => a.market_cap_rank - b.market_cap_rank)
       );
+      setSearchResult(sortedList);
       setFlag(false);
     } else {
       alert("please select a filter first");
@@ -193,6 +199,18 @@ const CoinList = () => {
             setSearch(e.target.value);
           }}
         />
+        <SelectedButton
+          style={{
+            width: "100%",
+            marginTop: "0",
+            fontSize: "16px",
+            fontWeight: "600",
+            fontFamily: "MONTSERRATE",
+          }}
+          onClick={handelSearch}
+        >
+          Search for the MOON
+        </SelectedButton>
         <Container className="filter_container">
           <SelectedButton onClick={handelSort}>{`+ (24-h)%`}</SelectedButton>
           <SelectedButton
@@ -202,8 +220,12 @@ const CoinList = () => {
             onClick={handelSort}
           >{`+ Volume(24-h)`}</SelectedButton>
           <SelectedButton onClick={handelSort}>{`- (24-h)%`}</SelectedButton>
-          <SelectedButton onClick={handelSort}>{`- Price Change`}</SelectedButton>
-          <SelectedButton onClick={handelSort}>{`- Volume(24-h)`}</SelectedButton>
+          <SelectedButton
+            onClick={handelSort}
+          >{`- Price Change`}</SelectedButton>
+          <SelectedButton
+            onClick={handelSort}
+          >{`- Volume(24-h)`}</SelectedButton>
           <SelectedButton onClick={handelSort}>{`- Market Cap`}</SelectedButton>
           <button className="reset_button" onClick={handelReset}>
             Reset
@@ -242,7 +264,7 @@ const CoinList = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {(handelSearch() || sortedList)
+                {(searchResult || sortedList)
                   .map((row) => {
                     const profit = row?.price_change_percentage_24h.toFixed(2);
                     const priceChange = row?.price_change_24h.toFixed(2);
@@ -335,7 +357,7 @@ const CoinList = () => {
         </TableContainer>
         <Pagination
           className="pagination_component"
-          count={parseInt(handelSearch()?.length / 20)}
+          count={parseInt(searchResult?.length / 20)}
           onChange={(_, value) => {
             setPage(value);
             window.scroll(0, 500);

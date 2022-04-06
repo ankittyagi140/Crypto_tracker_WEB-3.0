@@ -1,7 +1,7 @@
 import './SelectedButton.css'
-const SelectedButton = ({ children, onClick}) => {
+const SelectedButton = ({ children, onClick,style}) => {
   return (
-    <button className="chart_button" onClick={onClick}>
+    <button style={style}className="chart_button" onClick={onClick}>
       {children}
     </button>
   ); 
