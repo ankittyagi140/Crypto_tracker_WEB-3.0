@@ -4,7 +4,6 @@ import "./index.css";
 import App from "./App";
 import CryptoContext from "./CryptoContext/CryptoContext";
 
-
 ReactDOM.render(
   <React.StrictMode>
     <CryptoContext>
@@ -13,5 +12,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
-
-

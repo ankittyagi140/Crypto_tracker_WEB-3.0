@@ -3,14 +3,28 @@ import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import { CryptoState } from "../../CryptoContext/CryptoContext";
 import { useContext } from "react";
+import { useMoralis } from "react-moralis";
 
 const Header = () => {
   const navigate = useNavigate();
   const { currency, setCurrency } = useContext(CryptoState);
+  const { authenticate, isAuthenticated, logout, authError, user } =
+    useMoralis();
 
-  const handelClick = () => {
-    
+  const handleMetamaskLogin = async () => {
+    await authenticate({ signingMessage: "Log in using Moralis" })
+      .then(function (user) {
+        console.log("logged in user:", user);
+        console.log(user.get("ethAddress"));
+      })
+      .cath((err) => console.error(err));
   };
+
+  const handleLogout = async () => {
+    isAuthenticated && (await logout());
+    console.log("logged out");
+  };
+
   return (
     <NavBar>
       <Logo
@@ -23,9 +37,16 @@ const Header = () => {
         Crypto@Tech
       </Logo>
       <Navitems>
-        <button className="launch_app" onClick={handelClick}>
-          Connect<img src="../metamask.svg" height="30" width="40" alt="#"/> 
-        </button>
+        {isAuthenticated ? (
+          <button onClick={handleLogout} className="launch_app">
+            Log Out
+          </button>
+        ) : (
+          <button className="launch_app" onClick={handleMetamaskLogin}>
+            Connect
+            <img src="../metamask.svg" height="30" width="40" alt="#" />
+          </button>
+        )}
         <select
           className="drop-down"
           value={currency}

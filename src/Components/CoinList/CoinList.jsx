@@ -29,7 +29,6 @@ const CoinList = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
   let [page, setPage] = useState(1);
-  let [coinCount, setCoinCount] = useState(0);
 
   const fetchCoinData = async (currency) => {
     const { data } = await new Promise((res, rej) => {
