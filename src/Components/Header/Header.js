@@ -9,7 +9,7 @@ const Header = () => {
   const { currency, setCurrency } = useContext(CryptoState);
 
   const handelClick = () => {
-    navigate("transfer");
+    
   };
   return (
     <NavBar>
@@ -24,7 +24,7 @@ const Header = () => {
       </Logo>
       <Navitems>
         <button className="launch_app" onClick={handelClick}>
-          Transfer Crypto
+          Connect<img src="../metamask.svg" height="30" width="40" alt="#"/> 
         </button>
         <select
           className="drop-down"
